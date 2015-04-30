@@ -1,0 +1,31 @@
+{
+  "name": "workoutwatch",
+  "version": "1.0.0",
+  "description": "A stop watch for my workout",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --ui bdd --reporter spec ./test/ --recursive",
+    "watch": "watchy -w . -- npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ymainier/workoutwatch.git"
+  },
+  "keywords": [
+    "watch",
+    "workout"
+  ],
+  "author": "ymainier@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ymainier/workoutwatch/issues"
+  },
+  "homepage": "https://github.com/ymainier/workoutwatch",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "mocha": "^2.2.4",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "watchy": "^0.6.2"
+  }
+}
