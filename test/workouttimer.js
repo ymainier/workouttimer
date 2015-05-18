@@ -35,23 +35,41 @@ describe("Workout Timer", function () {
 				end: sinon.spy()
 			};
 
-			timer.on("tick", function (conf) {
-			});
 			timer.on("start", spies.start);
 			timer.on("tick", spies.tick);
 			timer.on("end", spies.end);
-			timer.addExercise("Abs", 2);
-			timer.addExercise("Squat", 1);
+			timer.addExercise("Abs", 2000);
+			timer.addExercise("Squat", 1000);
 
 			timer.start();
 			expect(spies.start).to.have.been.called;
 			expect(spies.tick.callCount).to.equal(0);
 			this.clock.tick(1000);
-			expect(spies.tick).to.have.been.calledWith({totalElapsedTime: 1000});
+			expect(spies.tick).to.have.been.calledWith({
+				time: {
+					elapsed: { element: 1000, total: 1000 },
+					remaining: { element: 1000, total: 2000 }
+				},
+				currentElement: timer.elements[0]
+			});
+			expect(spies.end).not.to.have.been.called;
 			this.clock.tick(1000);
-			expect(spies.tick).to.have.been.calledWith({totalElapsedTime: 2000});
+			expect(spies.tick).to.have.been.calledWith({
+				time: {
+					elapsed: { element: 2000, total: 2000 },
+					remaining: { element: 0, total: 1000 }
+				},
+				currentElement: timer.elements[0]
+			});
+			expect(spies.end).not.to.have.been.called;
 			this.clock.tick(1000);
-			expect(spies.tick).to.have.been.calledWith({totalElapsedTime: 3000});
+			expect(spies.tick).to.have.been.calledWith({
+				time: {
+					elapsed: { element: 1000, total: 3000 },
+					remaining: { element: 0, total: 0 }
+				},
+				currentElement: timer.elements[1]
+			});
 			expect(spies.end).to.have.been.called;
 		});
 	});
